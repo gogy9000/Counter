@@ -1,0 +1,47 @@
+.counter {
+    border-style: solid;
+    border-width: 1px;
+    border-radius: 5px;
+
+    text-align: center;
+    margin: 10% 30% 10% 30%;
+    background-color: #707073;
+
+    display: grid;
+    grid-template-areas:
+            'scoreboard scoreboard'
+            'clicker reset';
+}
+
+.scoreboard{
+    margin: 5px;
+    grid-area: scoreboard;
+    border-style: solid;
+    border-width: 1px;
+    border-radius: 5px;
+    background-color: white;
+}
+.clickTimeOut{
+    margin: 5px;
+    grid-area: scoreboard;
+    border-style: solid;
+    border-width: 1px;
+    border-radius: 5px;
+    border-color: red;
+    background-color: red;
+    opacity: 50%;
+}
+.clicker{
+    margin: 5px;
+    grid-area: clicker;
+    border-style: solid;
+    border-width: 1px;
+    border-radius: 5px;
+}
+.reset{
+    margin: 5px;
+    grid-area: reset;
+    border-style: solid;
+    border-width: 1px;
+    border-radius: 5px;
+}
