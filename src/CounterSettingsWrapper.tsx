@@ -1,55 +1,52 @@
 import SuperButton from "./SuperButton";
 import styles from './App.module.css'
-import {ChangeEvent, useEffect, useState} from "react";
+import React, {ChangeEvent, useEffect, useState} from "react";
 import {CustomInput} from "./CustomInput";
 import {json} from "stream/consumers";
 
-export const CounterSettingsWrapper = () => {
+type CounterSettingsWrapperPropsType = {
+    setStartValue: (x: number) => void
+    setMaxValue: (x: number) => void
+    startValue: number
+    maxValue: number
+}
 
-    const [startValue, setStartValue] = useState<number>(0)
-    const [maxValue, setMaxValue] = useState<number>(0)
 
-
-    const setValueHandler = () => {
-        localStorage.setItem('startValue', JSON.stringify(startValue) )
-        localStorage.setItem('maxValue', JSON.stringify(maxValue) )
-
+export const CounterSettingsWrapper: React.FC<CounterSettingsWrapperPropsType> = (
+    {
+        setMaxValue, setStartValue,
+        startValue, maxValue
     }
+) => {
     const clear = () => localStorage.clear()
 
-    const getValue = () => {
-      let  start = localStorage.getItem('startValue')
-        console.log(start)
-        if(!start){return}
-        setStartValue(Number(start))
-    }
+    useEffect(()=>{localStorage.setItem('maxValue', JSON.stringify(maxValue))},[maxValue])
 
-    const setMax = (value:string) => {
-        if ((/^\d+$/g).test(value)){
+    useEffect(()=>{localStorage.setItem('startValue', JSON.stringify(startValue) )},[startValue])
+
+    const setMax = (value: string) => {
+        if ((/^[0-9]*$/g).test(value)) {
             setMaxValue(Number(value))
         }
-    }
-    const setMin = (value:string) => {
 
-        if ((/^\d+$/g).test(value)){
+    }
+    const setStart = (value: string) => {
+        if ((/^[0-9]*$/g).test(value)) {
             setStartValue(Number(value))
         }
     }
 
     return (
         <div className={styles.settings}>
-            <div className={styles.startValue}>{localStorage.getItem('startValue')}</div>
 
-            <div className={styles.maxValue}>{localStorage.getItem('maxValue')}</div>
+            <div className={styles.startValue}>start</div>
 
-            <CustomInput value={startValue} onChangeText={setMin} className={styles.startValueInput}/>
+            <div className={styles.maxValue}>Max</div>
 
-            <CustomInput value={maxValue} onChangeText={setMax} className={styles.maxValueInput}/>
+            <CustomInput value={startValue} onChangeText={setStart} className={styles.startValueInput}/>
 
-            <SuperButton onClick={setValueHandler} className={styles.setButton}>set</SuperButton>
+            <CustomInput value={maxValue}  onChangeText={setMax} className={styles.maxValueInput}/>
 
-            <button onClick={clear}>X</button>
-            <button onClick={getValue}>get</button>
         </div>
     )
 }
