@@ -1,0 +1,130 @@
+
+.app {
+    border-style: solid;
+    border-width: 1px;
+    border-radius: 3px;
+    width: 800px;
+
+    display: grid;
+    grid-template-areas: 'settings counter';
+    grid-template-columns: 1fr 1fr;
+
+
+}
+
+.settings {
+    grid-area: settings;
+
+    border-style: solid;
+    border-width: 1px;
+    border-radius: 5px;
+
+    text-align: center;
+    margin: 5px;
+    padding: 10px;
+    background-color: #707073;
+
+    display: grid;
+    grid-template-areas:
+            'startValue startValueInput'
+            'maxValue maxValueInput'
+            'setButton setButton';
+    grid-template-columns: 60% 40%;
+    grid-column-gap: 5px;
+    grid-row-gap: 5px;
+
+}
+.startValue{
+    grid-area: startValue;
+
+    border-style: solid;
+    border-width: 1px;
+    border-radius: 5px;
+
+    background-color: white;
+
+}
+.maxValue{
+    grid-area: maxValue;
+
+    border-style: solid;
+    border-width: 1px;
+    border-radius: 5px;
+
+    background-color: white;
+
+}
+.startValueInput{
+    grid-area:startValueInput ;
+    border-style: solid;
+    border-width: 1px;
+    border-radius: 5px;
+}
+.maxValueInput{
+    grid-area: maxValueInput;
+    border-style: solid;
+    border-width: 1px;
+    border-radius: 5px;
+}
+.setButton{
+    margin: 5px;
+    grid-area: setButton;
+    border-style: solid;
+    border-width: 1px;
+    border-radius: 5px;
+}
+
+
+
+
+.counter {
+    grid-area: counter;
+    border-style: solid;
+    border-width: 1px;
+    border-radius: 5px;
+
+    text-align: center;
+    margin: 5px;
+    background-color: #707073;
+
+    display: grid;
+    grid-template-areas:
+            'scoreboard scoreboard'
+            'clicker reset';
+}
+
+.scoreboard {
+    margin: 5px;
+    grid-area: scoreboard;
+    border-style: solid;
+    border-width: 1px;
+    border-radius: 5px;
+    background-color: white;
+}
+
+.clickTimeOut {
+    margin: 5px;
+    grid-area: scoreboard;
+    border-style: solid;
+    border-width: 1px;
+    border-radius: 5px;
+    border-color: red;
+    background-color: red;
+    opacity: 50%;
+}
+
+.clicker {
+    margin: 5px;
+    grid-area: clicker;
+    border-style: solid;
+    border-width: 1px;
+    border-radius: 5px;
+}
+
+.reset {
+    margin: 5px;
+    grid-area: reset;
+    border-style: solid;
+    border-width: 1px;
+    border-radius: 5px;
+}

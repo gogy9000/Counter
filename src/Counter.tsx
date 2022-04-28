@@ -11,22 +11,22 @@ type CounterPropsType = {
 export const Counter: React.FC<CounterPropsType> = (
     {clickHandler, count, resetHandler, clickTimeOut}) => {
     return (
+
         <div className={s.counter}>
 
             <div className={!clickTimeOut ? s.scoreboard : s.clickTimeOut}>
                 {count}
             </div>
 
-                <SuperButton disabled={clickTimeOut}
-                             onClick={clickHandler}
-                             className={s.clicker}
-                >click</SuperButton>
-
-
+            <SuperButton disabled={clickTimeOut}
+                         onClick={clickHandler}
+                         className={s.clicker}
+            >click</SuperButton>
 
             <SuperButton className={s.reset}
                          onClick={resetHandler}
-                         red={clickTimeOut}>reset</SuperButton>
+                         red={clickTimeOut}
+            >reset</SuperButton>
 
 
         </div>)
