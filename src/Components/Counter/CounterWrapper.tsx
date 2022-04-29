@@ -1,16 +1,18 @@
 import React, {useEffect, useState} from "react";
 import {Counter} from "./Counter";
-import styles from './App.module.css'
+import styles from '../../App.module.css'
 
 type CounterWrapperPropsType = {
     setStartValue:(x:number)=>void
     setMaxValue:(x:number)=>void
     startValue:number
     maxValue:number
+    error:string
+    setError:(error:string)=>void
 }
 
 export const CounterWrapper: React.FC<CounterWrapperPropsType> = ({
-        startValue, maxValue
+        startValue, maxValue,error,setError
     }) => {
 
     let [count, setCount] = useState<number>(Number(localStorage.getItem('startValue')))
@@ -22,16 +24,13 @@ export const CounterWrapper: React.FC<CounterWrapperPropsType> = ({
         if(!valueAsNumber){return}
         setCount(valueAsNumber)
         console.log(localStorage.getItem('startValue'))
-    }, [startValue])
+    }, [startValue,maxValue,error])
 
 
     useEffect(() => {
         if(!Number(localStorage.getItem('maxValue'))){return}
         setTimeOutValue(Number(localStorage.getItem('maxValue')))
-    }, [maxValue])
-
-
-
+    }, [maxValue,startValue,error])
 
 
     const clickHandler = () => {
@@ -45,9 +44,12 @@ export const CounterWrapper: React.FC<CounterWrapperPropsType> = ({
 
     }
 
+
+
     return (
-        <div className={styles.counter}>
-            <Counter clickHandler={clickHandler}
+        <div >
+            <Counter error={error}
+                clickHandler={clickHandler}
                      count={count}
                      resetHandler={resetHandler}
                      clickTimeOut={clickTimeOut}/>
