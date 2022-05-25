@@ -4,18 +4,31 @@ import styles from './App.module.css'
 import {useState} from "react";
 
 export const App = () => {
-    const [startValue, setStartValue] = useState<number>(0)
-    const [maxValue, setMaxValue] = useState<number>(0)
-    const [error,setError]=useState('')
+
+    const [error, setError] = useState('')
+
+    // useEffect(() => {
+    //     if(startValue>maxValue){
+    //         setError('не канает!')
+    //         return
+    //     }
+    //     localStorage.setItem('maxValue', JSON.stringify(maxValue))
+    // }, [maxValue])
+    //
+    // useEffect(() => {
+    //     if(startValue>maxValue){
+    //         setError('не канает!')
+    //         return
+    //     }
+    //     localStorage.setItem('startValue', JSON.stringify(startValue))
+    // }, [startValue])
 
     return (
         <div className={styles.appWrapper}>
             <div className={styles.app}>
-            <CounterSettingsWrapper error={error} setError={setError} maxValue={maxValue}  startValue={startValue}
-                                    setStartValue={setStartValue} setMaxValue={setMaxValue} />
-            <CounterWrapper error={error} setError={setError} maxValue={maxValue}  startValue={startValue}
-                            setStartValue={setStartValue} setMaxValue={setMaxValue}/>
-        </div>
+                <CounterSettingsWrapper setError={setError}/>
+                <CounterWrapper error={error}/>
+            </div>
         </div>
 
 

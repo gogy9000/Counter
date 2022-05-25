@@ -1,16 +1,16 @@
 import s from '../../App.module.css'
 import SuperButton from "../SuperButton/SuperButton";
 import React, {useEffect} from "react";
+import {initStateType} from "../../redux/CountReducer";
 
 type CounterPropsType = {
     clickHandler: () => void
-    count: number
     resetHandler: () => void
-    clickTimeOut: boolean
     error:string
+    state: initStateType
 }
 export const Counter: React.FC<CounterPropsType> = (
-    {clickHandler, count, resetHandler, clickTimeOut,error}) => {
+    {clickHandler, resetHandler,error,state}) => {
 
     useEffect(()=>{
         if (error){
@@ -23,18 +23,18 @@ export const Counter: React.FC<CounterPropsType> = (
 
         <div className={s.counter}>
 
-            <div className={!clickTimeOut ? s.scoreboard : s.clickTimeOut}>
-                {error?error:count}
+            <div className={!state.isMaxValue ? s.scoreboard : s.clickTimeOut}>
+                {error?error:state.count}
             </div>
 
-            <SuperButton disabled={clickTimeOut||!!error}
+            <SuperButton disabled={state.isMaxValue||!!error}
                          onClick={clickHandler}
                          className={s.clicker}
             >click</SuperButton>
 
             <SuperButton className={s.reset}
                          onClick={resetHandler}
-                         red={clickTimeOut}
+                         red={state.isMaxValue}
             >reset</SuperButton>
 
 

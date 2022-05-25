@@ -1,58 +1,55 @@
-import React, {useEffect, useState} from "react";
+import React from "react";
 import {Counter} from "./Counter";
-import styles from '../../App.module.css'
+import {useDispatch, useSelector} from "react-redux";
+import {AppStateType} from "../../redux/Store";
+import {actions} from "../../redux/CountReducer";
 
 type CounterWrapperPropsType = {
-    setStartValue:(x:number)=>void
-    setMaxValue:(x:number)=>void
-    startValue:number
-    maxValue:number
-    error:string
-    setError:(error:string)=>void
+    error: string
 }
 
 export const CounterWrapper: React.FC<CounterWrapperPropsType> = ({
-        startValue, maxValue,error,setError
-    }) => {
+                                                                      error
+                                                                  }) => {
 
-    let [count, setCount] = useState<number>(Number(localStorage.getItem('startValue')))
-    let[timeOutValue, setTimeOutValue]=useState<number>(Number(localStorage.getItem('startValue')))
-    const [clickTimeOut, setClickTimeOut] = useState<boolean>(false)
+    // let [count, setCount] = useState<number>(Number(localStorage.getItem('startValue')))
+    // let[timeOutValue, setTimeOutValue]=useState<number>(Number(localStorage.getItem('startValue')))
+    // const [clickTimeOut, setClickTimeOut] = useState<boolean>(false)
 
-    useEffect(() => {
-        let valueAsNumber=Number(localStorage.getItem('startValue'))
-        if(!valueAsNumber){return}
-        setCount(valueAsNumber)
-        console.log(localStorage.getItem('startValue'))
-    }, [startValue,maxValue,error])
-
-
-    useEffect(() => {
-        if(!Number(localStorage.getItem('maxValue'))){return}
-        setTimeOutValue(Number(localStorage.getItem('maxValue')))
-    }, [maxValue,startValue,error])
-
-
+    // useEffect(() => {
+    //     let valueAsNumber=Number(localStorage.getItem('startValue'))
+    //     if(!valueAsNumber){return}
+    //     setCount(valueAsNumber)
+    //     console.log(localStorage.getItem('startValue'))
+    // }, [startValue,maxValue,error])
+    //
+    //
+    // useEffect(() => {
+    //     if(!Number(localStorage.getItem('maxValue'))){return}
+    //     setTimeOutValue(Number(localStorage.getItem('maxValue')))
+    // }, [maxValue,startValue,error])
+    const state = useSelector((state: AppStateType) => state.CountReducer)
+    const dispatch = useDispatch()
     const clickHandler = () => {
-        count !== timeOutValue ?
-            setCount(count = count + 1) :
-            setClickTimeOut(true)
+        state.count !== state.maxValue ?
+            dispatch(actions.changeCounterValue(state.count + 1))
+            :
+            dispatch(actions.toggleIsMaxValue(true))
     }
     const resetHandler = () => {
-        setCount(count = Number(localStorage.getItem('startValue')))
-        setClickTimeOut(false)
+        dispatch(actions.changeCounterValue(0))
+        dispatch(actions.toggleIsMaxValue(false))
 
     }
 
-
-
     return (
-        <div >
+        <div>
             <Counter error={error}
-                clickHandler={clickHandler}
-                     count={count}
+                     clickHandler={clickHandler}
+                     state={state}
                      resetHandler={resetHandler}
-                     clickTimeOut={clickTimeOut}/>
+
+            />
         </div>
 
     )

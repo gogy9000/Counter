@@ -1,41 +1,21 @@
 import styles from '../../App.module.css'
 import React, {useEffect, useState} from "react";
 import {CustomInput} from "../CustomInput/CustomInput";
+import {useDispatch, useSelector} from "react-redux";
+import {AppStateType} from "../../redux/Store";
+import {actions, initStateType} from "../../redux/CountReducer";
 
 
 type CounterSettingsWrapperPropsType = {
-    setStartValue: (x: number) => void
-    setMaxValue: (x: number) => void
-    startValue: number
-    maxValue: number
-    error:string
     setError:(error:string)=>void
 }
 
 
-export const CounterSettingsWrapper: React.FC<CounterSettingsWrapperPropsType> = (
-    {
-        setMaxValue, setStartValue,
-        startValue, maxValue,error,setError
-    }
+export const CounterSettingsWrapper: React.FC<CounterSettingsWrapperPropsType> = ({setError}
 ) => {
 
-    useEffect(() => {
-        if(startValue>maxValue){
-            setError('не канает!')
-            return
-        }
-        localStorage.setItem('maxValue', JSON.stringify(maxValue))
-    }, [maxValue])
-
-    useEffect(() => {
-        if(startValue>maxValue){
-            setError('не канает!')
-            return
-        }
-        localStorage.setItem('startValue', JSON.stringify(startValue))
-    }, [startValue])
-
+    const state=useSelector<AppStateType,initStateType>((state)=>state.CountReducer)
+    const dispatch=useDispatch()
 
     const setMax = (value: string) => {
         if (!(/^[0-9]*$/g).test(value)) {
@@ -43,7 +23,7 @@ export const CounterSettingsWrapper: React.FC<CounterSettingsWrapperPropsType> =
             return
         }
         setError('')
-        setMaxValue(Number(value))
+        dispatch(actions.setMaxValue(Number(value)))
     }
 
     const setStart = (value: string) => {
@@ -52,7 +32,9 @@ export const CounterSettingsWrapper: React.FC<CounterSettingsWrapperPropsType> =
             return
         }
         setError('')
-        setStartValue(Number(value))
+        dispatch(actions.setStartValue(Number(value)))
+        dispatch(actions.changeCounterValue(Number(value)))
+        dispatch(actions.setMaxValue(Number(value)))
     }
 
     const clearValue = () => {
@@ -69,9 +51,9 @@ export const CounterSettingsWrapper: React.FC<CounterSettingsWrapperPropsType> =
 
             <div className={styles.maxValue}>Max</div>
 
-            <CustomInput onDoubleClick={clearStorage} onClick={clearValue}  value={startValue} onChangeText={setStart} className={styles.startValueInput}/>
+            <CustomInput onDoubleClick={clearStorage} onClick={clearValue}  value={state.startValue} onChangeText={setStart} className={styles.startValueInput}/>
 
-            <CustomInput onDoubleClick={clearStorage}  onClick={clearValue} value={maxValue} onChangeText={setMax} className={styles.maxValueInput}/>
+            <CustomInput onDoubleClick={clearStorage}  onClick={clearValue} value={state.maxValue} onChangeText={setMax} className={styles.maxValueInput}/>
 
         </div>
     )

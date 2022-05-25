@@ -1,17 +1,16 @@
-import React, {useState, MouseEvent, ChangeEvent} from 'react';
-
+import React from 'react';
 import './index.css';
 import ReactDOM from "react-dom";
 import {App} from "./App";
-
-
-
-
-
+import {Provider} from "react-redux";
+import {store} from "./redux/Store";
 
 
 ReactDOM.render(
-    <App/>, document.getElementById('root')
+    <Provider store={store}>
+        <App/>
+    </Provider>
+    , document.getElementById('root')
 );
 
 
